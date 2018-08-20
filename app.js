@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
@@ -5,7 +6,9 @@ const mongoose = require('mongoose')
 const player = require('./routes/player.route')
 const app = express()
 
-// Set up mongoose connection - done like this till custom params is available
+console.log('here')
+
+// Set up mongoose connection - this is a env variable for the moment till custom params are available
 const mongoDB = process.env.MONGODB_URI
 
 mongoose.connect(mongoDB, { useNewUrlParser: true })
@@ -19,7 +22,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/players', player)
 
-let port = 80
+let port = process.env.PORT || 80
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`)

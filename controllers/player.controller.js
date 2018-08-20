@@ -1,7 +1,8 @@
 const Player = require('../models/player.model')
 
 exports.hello = (req, res) => {
-  res.send('Hello world')
+  const name = req.params.name
+  res.send(`Hello ${name}`)
 }
 
 exports.player_create = (req, res) => {
@@ -26,17 +27,14 @@ exports.player_details = (req, res) => {
 }
 
 exports.player_update = (req, res) => {
-  Player.findByIdAndUpdate(req.params.id, { $set: req.body }, function(
-    err,
-    player
-  ) {
+  Player.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, player) => {
     if (err) return next(err)
-    res.send('Player udpated.')
+    res.send(player)
   })
 }
 
 exports.player_delete = (req, res) => {
-  Player.findByIdAndRemove(req.params.id, function(err) {
+  Player.findByIdAndRemove(req.params.id, err => {
     if (err) return next(err)
     res.send('Deleted successfully!')
   })
