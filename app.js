@@ -24,5 +24,5 @@ app.use('/players', player)
 let port = process.env.PORT || 80
 
 app.listen(port, () => {
-  console.log(`app listening on port ${port}`)
+  console.log(`app listening on this port here: ${port}`)
 })
