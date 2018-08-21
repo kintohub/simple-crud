@@ -32,7 +32,7 @@ router.get('/:id', player_controller.player_details)
 
 /**
  * @api {put} /{id}/update Updates the users details
- * @apiName updateUser
+ * @apiName updateUserDetails
  * @apiParam (Url) {String} id Users unique ID.
  * @apiParam {String} [name] Users new name.
  * @apiParam {Number} [score] Users new score.
