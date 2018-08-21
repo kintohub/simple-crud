@@ -46,7 +46,6 @@ router.put('/:id/update', player_controller.player_update)
  * @apiParam (Url) {String} id Users unique ID.
 
  * @apiSuccess (200) {String} message player deleted
- * @apiError (500) {String} error.message player not deleted
  */
 router.delete('/:id/delete', player_controller.player_delete)
 
