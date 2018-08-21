@@ -14,7 +14,7 @@ exports.player_create = async (req, res) => {
     await player.save()
     res.status(200).send(player)
   } catch (error) {
-    res.status(500).send({ error: `player not saved: ${error}` })
+    res.send({ error: `player not saved: ${error}` })
   }
 }
 
@@ -23,7 +23,7 @@ exports.player_details = async (req, res) => {
     const player = await Player.findById(req.params.id)
     res.status(200).send(player)
   } catch (error) {
-    res.status(500).send({ error: `player not found: ${error}` })
+    res.send({ error: `player not found: ${error}` })
   }
 }
 
@@ -34,7 +34,7 @@ exports.player_update = async (req, res) => {
     })
     res.status(200).send(player)
   } catch (error) {
-    res.status(500).send({ error: `player not updated: ${error}` })
+    res.send({ error: `player not updated: ${error}` })
   }
 }
 
@@ -43,6 +43,6 @@ exports.player_delete = async (req, res) => {
     const player = await Player.findByIdAndRemove(req.params.id)
     res.status(200).send('Deleted successfully!')
   } catch (error) {
-    res.status(500).send({ error: `player not deleted: ${error}` })
+    res.send({ error: `player not deleted: ${error}` })
   }
 }
