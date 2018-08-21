@@ -34,8 +34,8 @@ router.get('/:id', player_controller.player_details)
  * @api {put} /{id}/update Updates the users details
  * @apiName updateUserDetails
  * @apiParam (Url) {String} id Users unique ID.
- * @apiParam {String} [name] Users new name.
- * @apiParam {Number} [score] Users new score.
+ * @apiParam {String} name Users new name.
+ * @apiParam {Number} score Users new score.
  * @apiSuccess (200) {Object} returns updated user
  */
 router.put('/:id/update', player_controller.player_update)
@@ -45,7 +45,8 @@ router.put('/:id/update', player_controller.player_update)
  * @apiName deleteUser
  * @apiParam (Url) {String} id Users unique ID.
 
- * @apiSuccess (200) {String} message user deleted
+ * @apiSuccess (200) {String} message player deleted
+ * @apiError (500) {String} error.message player not deleted
  */
 router.delete('/:id/delete', player_controller.player_delete)
 

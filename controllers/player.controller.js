@@ -5,37 +5,44 @@ exports.hello = (req, res) => {
   res.send(`Hello ${name}`)
 }
 
-exports.player_create = (req, res) => {
-  let player = new Player({
-    name: req.body.name,
-    score: req.body.score
-  })
-
-  player.save(function(err) {
-    if (err) {
-      return next(err)
-    }
-    res.send('Player Created successfully')
-  })
+exports.player_create = async (req, res) => {
+  try {
+    let player = new Player({
+      name: req.body.name,
+      score: req.body.score
+    })
+    await player.save()
+    res.status(200).send(player)
+  } catch (error) {
+    res.status(500).send({ error: `player not saved: ${error}` })
+  }
 }
 
-exports.player_details = (req, res) => {
-  Player.findById(req.params.id, (err, player) => {
-    if (err) return next(err)
-    res.send(player)
-  })
+exports.player_details = async (req, res) => {
+  try {
+    const player = await Player.findById(req.params.id)
+    res.status(200).send(player)
+  } catch (error) {
+    res.status(500).send({ error: `player not found: ${error}` })
+  }
 }
 
-exports.player_update = (req, res) => {
-  Player.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, player) => {
-    if (err) return next(err)
-    res.send(player)
-  })
+exports.player_update = async (req, res) => {
+  try {
+    const player = await Player.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    })
+    res.status(200).send(player)
+  } catch (error) {
+    res.status(500).send({ error: `player not updated: ${error}` })
+  }
 }
 
-exports.player_delete = (req, res) => {
-  Player.findByIdAndRemove(req.params.id, err => {
-    if (err) return next(err)
-    res.send('Deleted successfully!')
-  })
+exports.player_delete = async (req, res) => {
+  try {
+    const player = await Player.findByIdAndRemove(req.params.id)
+    res.status(200).send('Deleted successfully!')
+  } catch (error) {
+    res.status(500).send({ error: `player not deleted: ${error}` })
+  }
 }

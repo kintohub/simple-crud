@@ -6,8 +6,6 @@ const mongoose = require('mongoose')
 const player = require('./routes/player.route')
 const app = express()
 
-console.log('here')
-
 // Set up mongoose connection - this is a env variable for the moment till custom params are available
 const mongoDB = process.env.MONGODB_URI
 
