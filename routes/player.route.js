@@ -24,7 +24,7 @@ router.post('/create', player_controller.player_create)
 /**
  * @api {get} /{id} Gets the requested user
  * @apiName getUser
- * @apiParam (Url) {String} id Users unique ID.
+ * @apiParam (Url) {String} id Users unique id.
 
  * @apiSuccess (200) {Object} returns users details
  */
