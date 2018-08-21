@@ -19,7 +19,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
-app.use('/players', player)
+app.use('/', player)
 
 let port = process.env.PORT || 80
 
