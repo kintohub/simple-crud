@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
+const morgan = require('morgan')
 const player = require('./routes/player.route')
 const app = express()
 
@@ -18,6 +18,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(morgan('combined'))
 app.use('/players', player)
 
 let port = process.env.PORT || 80
