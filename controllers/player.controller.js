@@ -1,5 +1,14 @@
 const Player = require('../models/player.model')
 
+const logError = requestId => {
+  console.log(
+    JSON.stringify({
+      kinto_request_id: requestId,
+      error: error
+    })
+  )
+}
+
 exports.hello = (req, res) => {
   const name = req.params.name
   res.send(`Hello ${name}`)
@@ -19,6 +28,8 @@ exports.player_create = async (req, res) => {
     await player.save()
     res.status(200).send(player)
   } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logError(requestId)
     res.send({ error: `player not saved: ${error}` })
   }
 }
@@ -48,6 +59,8 @@ exports.player_update = async (req, res) => {
     )
     res.status(200).send(player)
   } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logError(requestId)
     res.send({ error: `player not updated: ${error}` })
   }
 }
@@ -59,6 +72,8 @@ exports.player_delete = async (req, res) => {
     await Player.findByIdAndRemove(foundPlayer._id)
     res.status(200).send('Deleted successfully!')
   } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logError(requestId)
     res.send({ error: `player not deleted: ${error}` })
   }
 }
@@ -68,6 +83,8 @@ exports.all_players = async (req, res) => {
     const players = await Player.find({})
     res.send(players)
   } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logError(requestId)
     res.send({ error: `players not found: ${error}` })
   }
 }
