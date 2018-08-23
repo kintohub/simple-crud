@@ -32,8 +32,7 @@ router.get('/get/:username', player_controller.player_details)
 /**
  * @api {put} /{username}/update Updates the players details
  * @apiName updateUserDetails
- * @apiParam (Url) {String} username Users unique ID.
- * @apiParam {Number} score Users new score.
+ * @apiParam (Url) {String} username Users slack username.
  * @apiSuccess (200) {Object} returns updated player
  */
 router.put('/:username/update', player_controller.player_update)
@@ -42,15 +41,14 @@ router.put('/:username/update', player_controller.player_update)
  * @api {delete} /{username}/delete Deletes the player
  * @apiName deleteUser
  * @apiParam (Url) {String} username Users name.
-
- * @apiSuccess (200) {String} message player deleted
+ * @apiSuccess (200) {String} message confirming player deleted
  */
 router.delete('/:username/delete', player_controller.player_delete)
 
 /**
  * @api {get} /all Gets a list of all the players
  * @apiName getAllPlayers
- * @apiSuccess (200) {Object} returns players details
+ * @apiSuccess (200) {Object} returns details for all the players
  */
 router.get('/all', player_controller.all_players)
 
