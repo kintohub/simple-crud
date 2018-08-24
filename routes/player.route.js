@@ -17,8 +17,8 @@ router.post('/create', player_controller.player_create)
  * @api {get} /get/{username} Gets the requested player
  * @apiName getUser
  * @apiParam (Url) {String} id Users unique id.
- * @apiSuccess (200) {Object} returns players details
- * @apiError (400) {String} error.name the error message for the name
+ * @apiSuccess {Object} returns players details
+ * @apiError {String} error.username player not found
  */
 router.get('/get/:username', player_controller.player_details)
 
@@ -26,7 +26,8 @@ router.get('/get/:username', player_controller.player_details)
  * @api {put} /{username}/update Updates the players details
  * @apiName updateUserDetails
  * @apiParam (Url) {String} username Users slack username.
- * @apiSuccess (200) {Object} returns updated player
+ * @apiSuccess {Object} returns updated player
+ * @apiError {String} error.username player not found
  */
 router.put('/:username/update', player_controller.player_update)
 
@@ -34,14 +35,16 @@ router.put('/:username/update', player_controller.player_update)
  * @api {delete} /{username}/delete Deletes the player
  * @apiName deleteUser
  * @apiParam (Url) {String} username Users name.
- * @apiSuccess (200) {String} message confirming player deleted
+ * @apiSuccess {String} message confirming player deleted
+ * @apiError {String} error.username player not found
  */
 router.delete('/:username/delete', player_controller.player_delete)
 
 /**
  * @api {get} /all Gets a list of all the players
  * @apiName getAllPlayers
- * @apiSuccess (200) {Object} returns details for all the players
+ * @apiSuccess {Object} returns details for all the players
+ * @apiError {String} error players not found
  */
 router.get('/all', player_controller.all_players)
 

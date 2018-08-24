@@ -3,16 +3,11 @@ const logs = require('../helpers/logsHelper')
 
 exports.player_create = async (req, res) => {
   try {
-    let player
-    player = await Player.findOne({ name: req.body.name })
-
-    if (!!player) {
-      player = new Player({
-        name: req.body.name,
-        score: req.body.score
-      })
-    }
-    await player.save()
+    const player = await Player.findOneAndUpdate(
+      { name: req.body.name },
+      { $set: { name: req.body.name, score: req.body.score } },
+      { upsert: true }
+    )
     res.status(200).send(player)
   } catch (error) {
     const requestId = req.get('kinto-request-id')
@@ -33,17 +28,12 @@ exports.player_details = async (req, res) => {
 
 exports.player_update = async (req, res) => {
   try {
-    const score = await Player.findOne({ name: req.params.username }, 'score')
-    console.log(score)
-    const newScore = score + 1
     const player = await Player.findOneAndUpdate(
       { name: req.params.username },
-      {
-        $set: { score: newScore }
-      },
+      { $inc: { score: 1 } },
       { new: true }
     )
-    res.status(200).send(player)
+    res.send(player)
   } catch (error) {
     const requestId = req.get('kinto-request-id')
     logs.logError(requestId, error)
@@ -54,7 +44,7 @@ exports.player_update = async (req, res) => {
 exports.player_delete = async (req, res) => {
   try {
     await Player.findOneAndDelete({ name: req.params.username })
-    res.status(200).send('Deleted successfully!')
+    res.send('Deleted successfully!')
   } catch (error) {
     const requestId = req.get('kinto-request-id')
     logs.logError(requestId, error)
