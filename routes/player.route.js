@@ -4,20 +4,12 @@ const router = express.Router()
 const player_controller = require('../controllers/player.controller')
 
 /**
- * @api {get} /hello/{name} Prints "Hello {name}"
- * @apiName Hello
- * @apiParam (Url) {String} name the name to print
- * @apiSuccess (200) {String} message the hello {name} message
- */
-router.get('/hello/:name', player_controller.hello)
-
-/**
  * @api {post} /create Creates player
  * @apiName createUser
- * @apiParam {String} name Users name.
- * @apiParam {Number} score Users score.
-
- * @apiSuccess (200) {String} message player created
+ * @apiParam {String} name Players escaped slack username.
+ * @apiParam {Number} score Users score, sent by default at 0 on creation.
+ * @apiSuccess {Object} response Information about the player that was created
+ * @apiError {String} error.name message for an invalid name
  */
 router.post('/create', player_controller.player_create)
 
@@ -26,6 +18,7 @@ router.post('/create', player_controller.player_create)
  * @apiName getUser
  * @apiParam (Url) {String} id Users unique id.
  * @apiSuccess (200) {Object} returns players details
+ * @apiError (400) {String} error.name the error message for the name
  */
 router.get('/get/:username', player_controller.player_details)
 
