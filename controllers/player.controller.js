@@ -60,7 +60,7 @@ exports.playerDelete = async (req, res) => {
 
 exports.allPlayers = async (req, res) => {
   try {
-    const players = await Player.find({})
+    const players = await Player.find({}, { $limit: 50 })
     res.send(players)
   } catch (error) {
     const requestId = req.get('kinto-request-id')
