@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/', player)
 
-const port = '8000'
+const port = process.env.PORT || '8000'
 
 app.listen(port, () => {
   console.log(`app listening on this port here: ${port}`)
