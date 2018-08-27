@@ -1,14 +1,14 @@
 const Player = require('../models/player.model')
 const logs = require('../helpers/logsHelper')
 
-exports.player_create = async (req, res) => {
+exports.playerCreate = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { name: req.body.name },
       { $set: { name: req.body.name, score: req.body.score } },
       { upsert: true }
     )
-    res.status(200).send(player)
+    res.send(player)
   } catch (error) {
     const requestId = req.get('kinto-request-id')
     logs.logError(requestId, error)
@@ -16,17 +16,22 @@ exports.player_create = async (req, res) => {
   }
 }
 
-exports.player_details = async (req, res) => {
+exports.playerDetails = async (req, res) => {
   try {
     const player = await Player.findOne({ name: req.params.username })
-    res.status(200).send(player)
+
+    if (player === null) {
+      res.status(401).send({ error: 'player not found' })
+    }
+
+    res.send(player)
   } catch (error) {
     logs.logError(requestId, error)
     res.status(400).send({ error: `player not found: ${error}` })
   }
 }
 
-exports.player_update = async (req, res) => {
+exports.playerUpdate = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { name: req.params.username },
@@ -41,7 +46,7 @@ exports.player_update = async (req, res) => {
   }
 }
 
-exports.player_delete = async (req, res) => {
+exports.playerDelete = async (req, res) => {
   try {
     await Player.findOneAndDelete({ name: req.params.username })
     res.send('Deleted successfully!')
@@ -52,7 +57,7 @@ exports.player_delete = async (req, res) => {
   }
 }
 
-exports.all_players = async (req, res) => {
+exports.allPlayers = async (req, res) => {
   try {
     const players = await Player.find({})
     res.send(players)
