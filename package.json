@@ -2,17 +2,23 @@
   "name": "slackbotcrud",
   "version": "1.0.0",
   "description": "CRUD database for slackbot",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "prod": "PORT=80 node index.js"
+    "start": "node app.js",
+    "prod": "PORT=80 node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kintohub/simple-crud.git"
   },
   "author": "laura",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "mongoose": "^5.2.9"
+    "mongoose": "^5.2.9",
+    "morgan": "^1.9.0"
   }
 }
