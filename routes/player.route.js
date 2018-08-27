@@ -19,6 +19,7 @@ router.post('/create', playerController.playerCreate)
  * @apiParam (Url) {String} id Users unique id.
  * @apiSuccess {Object} returns players details
  * @apiError {String} error.username player not found
+ * @apiError (404) {String} error.username player not found
  */
 router.get('/get/:username', playerController.playerDetails)
 

@@ -21,11 +21,12 @@ exports.playerDetails = async (req, res) => {
     const player = await Player.findOne({ name: req.params.username })
 
     if (player === null) {
-      res.status(401).send({ error: 'player not found' })
+      res.status(404).send({ error: 'player not found' })
     }
 
     res.send(player)
   } catch (error) {
+    const requestId = req.get('kinto-request-id')
     logs.logError(requestId, error)
     res.status(400).send({ error: `player not found: ${error}` })
   }
