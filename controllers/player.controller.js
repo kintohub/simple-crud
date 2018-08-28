@@ -1,43 +1,70 @@
 const Player = require('../models/player.model')
+const logs = require('../helpers/logsHelper')
 
-exports.hello = (req, res) => {
-  res.send('Hello world')
-}
-
-exports.player_create = (req, res) => {
-  let player = new Player({
-    name: req.body.name,
-    score: req.body.score
-  })
-
-  player.save(function(err) {
-    if (err) {
-      return next(err)
-    }
-    res.send('Player Created successfully')
-  })
-}
-
-exports.player_details = (req, res) => {
-  Player.findById(req.params.id, (err, player) => {
-    if (err) return next(err)
+exports.playerCreate = async (req, res) => {
+  try {
+    const player = await Player.findOneAndUpdate(
+      { name: req.body.name },
+      { $set: { name: req.body.name, score: req.body.score } },
+      { upsert: true }
+    )
     res.send(player)
-  })
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `player not saved: ${error}` })
+  }
 }
 
-exports.player_update = (req, res) => {
-  Player.findByIdAndUpdate(req.params.id, { $set: req.body }, function(
-    err,
-    player
-  ) {
-    if (err) return next(err)
-    res.send('Player udpated.')
-  })
+exports.playerDetails = async (req, res) => {
+  try {
+    const player = await Player.findOne({ name: req.params.username })
+
+    if (player === null) {
+      res.status(404).send({ error: 'player not found' })
+    }
+
+    res.send(player)
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `player not found: ${error}` })
+  }
 }
 
-exports.player_delete = (req, res) => {
-  Player.findByIdAndRemove(req.params.id, function(err) {
-    if (err) return next(err)
+exports.playerUpdate = async (req, res) => {
+  try {
+    const player = await Player.findOneAndUpdate(
+      { name: req.params.username },
+      { $inc: { score: 1 } },
+      { new: true }
+    )
+    res.send(player)
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `player not updated: ${error}` })
+  }
+}
+
+exports.playerDelete = async (req, res) => {
+  try {
+    await Player.findOneAndDelete({ name: req.params.username })
     res.send('Deleted successfully!')
-  })
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `player not deleted: ${error}` })
+  }
+}
+
+exports.allPlayers = async (req, res) => {
+  try {
+    const players = await Player.find({})
+    res.send(players)
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `players not found: ${error}` })
+  }
 }

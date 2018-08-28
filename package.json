@@ -8,11 +8,17 @@
     "start": "node app.js",
     "prod": "PORT=80 node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kintohub/simple-crud.git"
+  },
   "author": "laura",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "mongoose": "^5.2.9"
+    "mongoose": "^5.2.9",
+    "morgan": "^1.9.0"
   }
 }
