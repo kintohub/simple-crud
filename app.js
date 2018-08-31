@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const player = require('./routes/player.route')
 const app = express()
-
 // Set up mongoose connection - this is a env variable for the moment - later this will be provided in headers for individual connections
 const mongoDB = process.env.MONGODB_URI
 
