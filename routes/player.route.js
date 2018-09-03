@@ -35,7 +35,7 @@ router.put('/:username/update', playerController.playerUpdate)
  * @api {delete} /{username}/delete Deletes the player
  * @apiName deleteUser
  * @apiParam (Url) {String} username Users name.
- * @apiSuccess {String} message confirming player deleted
+ * @apiSuccess {String} message sends a message confirming player deleted
  * @apiError {String} error.username player not deleted there was a problem retrieving data from the database
  */
 router.delete('/:username/delete', playerController.playerDelete)
@@ -43,15 +43,15 @@ router.delete('/:username/delete', playerController.playerDelete)
 /**
  * @api {get} /all Gets a list of all the players
  * @apiName getAllPlayers
- * @apiSuccess {Object} returns details for all the players
+ * @apiSuccess {Object} players returns details for all the players
  * @apiError {String} error there was a problem retrieving data from the database
  */
 router.get('/all', playerController.allPlayers)
 
 /**
- * @api {get} /update-all Updates all the players at once
+ * @api {put} /update-all Updates all the players at once
  * @apiName updateAllPlayers
- * @apiSuccess {Object} returns updated details for all the players
+ * @apiSuccess {Object} players returns updated details for all the players
  * @apiError {String} error there was a problem retrieving data from the database
  */
 router.put('/update-all', playerController.updateAll)
