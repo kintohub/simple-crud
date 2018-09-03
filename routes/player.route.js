@@ -48,4 +48,12 @@ router.delete('/:username/delete', playerController.playerDelete)
  */
 router.get('/all', playerController.allPlayers)
 
+/**
+ * @api {get} /update-all Updates all the players at once
+ * @apiName updateAllPlayers
+ * @apiSuccess {Object} returns updated details for all the players
+ * @apiError {String} error there was a problem retrieving data from the database
+ */
+router.put('/update-all', playerController.updateAll)
+
 module.exports = router

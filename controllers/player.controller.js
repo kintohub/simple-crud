@@ -68,3 +68,26 @@ exports.allPlayers = async (req, res) => {
     res.status(400).send({ error: `players not found: ${error}` })
   }
 }
+
+exports.updateAll = async (req, res) => {
+  try {
+    var bulk = Player.collection.initializeUnorderedBulkOp()
+    req.body.players.map(player => {
+      bulk
+        .find({ name: player.username })
+        .updateOne(
+          { $inc: { score: player.score } },
+          { new: true, upsert: true }
+        )
+    })
+    await bulk.execute((err, result) => {
+      const something = result
+    })
+    const players = await Player.find({})
+    res.send(players)
+  } catch (error) {
+    const requestId = req.get('kinto-request-id')
+    logs.logError(requestId, error)
+    res.status(400).send({ error: `could not update all: ${error}` })
+  }
+}
